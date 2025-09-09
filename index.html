@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Graphics Engine Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-[#2f3640] text-gray-100 min-h-screen flex flex-col items-center">
+
+    <!-- Header -->
+    <header class="w-full max-w-full px-8 py-8 md:py-12 flex justify-between items-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-200">Marco's Portfolio</h1>
+        <div class="flex items-center">
+            <nav>
+                <a href="#projects" class="text-gray-400 hover:text-gray-100 mx-2 transition duration-300">Projects</a>
+                <a href="#contact" class="text-gray-400 hover:text-gray-100 mx-2 transition duration-300">Contact</a>
+            </nav>
+            <img id="profile-picture" src="https://i.ibb.co/N679xDRR/foto.png" alt="Profile Picture" class="w-20 h-30 rounded-full border-4 border-[#00ffff] shadow-[0_0_8px_rgba(0,255,255,0.7)] ml-4 cursor-pointer">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="w-full max-w-full px-8 py-12 md:py-24 rounded-xl border-4 border-[#00ffff] shadow-[0_0_15px_rgba(0,255,255,0.7)]">
+        <section class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-semibold mb-4 text-gray-200">Marco Cerbone</h2>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+                An experienced developer with a deep passion for video games and solid skills in game engines like Unreal Engine and Unity. My experience ranges from programming in C++ and C# for video game development to creating augmented and virtual reality applications. I have proven ability to work on complex projects, including multiplayer development and the integration of emerging technologies such as streaming and AI.
+            </p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="mb-16">
+            <h3 class="text-2xl md:text-3xl font-bold mb-8 text-center text-gray-200">My Projects</h3>
+            <div id="project-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project cards will be dynamically inserted here -->
+            </div>
+            <p class="mt-8 text-sm text-center text-gray-400">
+                The videos show products I have worked on, but they belong to their respective owners.
+            </p>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="text-center">
+            <h3 class="2xl md:text-3xl font-bold mb-4 text-gray-200">Contact Me</h3>
+            <p class="text-lg text-gray-400 mb-4">
+                You can contact me at this email address: <a href="mailto:marcocerbone7@gmail.com" class="text-blue-500 hover:underline">marcocerbone7@gmail.com</a>
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="https://www.linkedin.com/in/marco-cerbone-3b6a5889" target="_blank" class="text-blue-500 hover:text-blue-700 transition duration-300">LinkedIn</a>
+                <a href="https://github.com/NatakuZ" target="_blank" class="text-gray-400 hover:text-gray-100 transition duration-300">GitHub</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-full px-4 py-8 text-center text-gray-400 mt-auto">
+        <p>&copy; 2024 My Portfolio. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center p-4 z-50">
+        <div id="modal-content" class="relative w-full max-w-4xl rounded-lg overflow-hidden">
+            <button id="close-modal" class="absolute top-2 right-2 text-white text-3xl leading-none z-50">&times;</button>
+            <div class="video-container">
+                <iframe id="modal-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal-overlay" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center p-4 z-50">
+        <div id="image-modal-content" class="relative w-full max-w-md p-4 bg-gray-800 rounded-lg">
+            <button id="close-image-modal" class="absolute top-2 right-2 text-white text-3xl leading-none z-50">&times;</button>
+            <img id="modal-image" src="" alt="Zoomed Profile Picture" class="w-full h-auto rounded-lg">
+        </div>
+    </div>
+
+    <script>
+        // Array of objects for your projects
+        const projects = [
+            {
+                title: "LUOGHI E PERCORSI IMMERSIVI D’ITALIA",
+                description: "An immersive and accessible digital platform that brings the metaverse to Italian villages and symbolic cultural sites, particularly those excluded from mass tourist circuits, such as inland areas, smaller islands, and coastal zones.",
+                videoUrl: "https://www.youtube.com/embed/fFkjqwV7LmA" // Replace VIDEO_ID_2 with your YouTube video ID
+            },
+            {
+                title: "DIVING",
+                description: "A game to reduce anxiety in children who need to undergo radiological exams, which can be played on a tablet or with a VR headset. It has a multiplayer connection option, allowing a second player to assist the other.",
+                videoUrl: "https://www.youtube.com/embed/lbzdj40ez1U" // Replace VIDEO_ID_1 with your YouTube video ID
+            },
+            {
+                title: "Avventure a Ercolano",
+                description: "An Augmented Reality project to enable neurodivergent children to visit the Herculaneum excavations. The visit is gamified with various levels connected to Beacons that recognize the location within the archaeological site. Created with 'Garage94' and 'Mi Coloro di Blu'.",
+                videoUrl: "https://www.youtube.com/embed/xTSYOHOHU1Q" // Replace VIDEO_ID_3 with your YouTube video ID
+            },
+        ];
+
+        const projectContainer = document.getElementById('project-container');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalIframe = document.getElementById('modal-iframe');
+        const profilePicture = document.getElementById('profile-picture');
+        const imageModalOverlay = document.getElementById('image-modal-overlay');
+        const modalImage = document.getElementById('modal-image');
+        const closeImageModalButton = document.getElementById('close-image-modal');
+
+        // Funzione per creare e inserire le schede dei progetti
+        function createProjectCards() {
+            projectContainer.innerHTML = ''; // Pulisce il contenuto esistente
+            projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'bg-gray-800 rounded-xl shadow-lg p-6 project-card';
+                
+                projectCard.innerHTML = `
+                    <h4 class="text-xl font-bold mb-2 text-gray-200">${project.title}</h4>
+                    <div class="video-container mb-4">
+                        <iframe src="${project.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-gray-400">${project.description}</p>
+                `;
+                projectCard.addEventListener('click', () => {
+                    modalIframe.src = project.videoUrl;
+                    modalOverlay.classList.remove('hidden');
+                });
+                projectContainer.appendChild(projectCard);
+            });
+        }
+
+        // Event listener per aprire la modale dell'immagine
+        profilePicture.addEventListener('click', () => {
+            modalImage.src = profilePicture.src;
+            imageModalOverlay.classList.remove('hidden');
+        });
+
+        // Event listener per chiudere la modale dei video
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay' || e.target.id === 'close-modal') {
+                modalOverlay.classList.add('hidden');
+                modalIframe.src = ''; // Ferma il video
+            }
+        });
+
+        // Event listener per chiudere la modale dell'immagine
+        imageModalOverlay.addEventListener('click', (e) => {
+            if (e.target.id === 'image-modal-overlay' || e.target.id === 'close-image-modal') {
+                imageModalOverlay.classList.add('hidden');
+                modalImage.src = ''; // Rimuove l'immagine
+            }
+        });
+
+        // Chiude entrambe le modali con il tasto Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (!modalOverlay.classList.contains('hidden')) {
+                    modalOverlay.classList.add('hidden');
+                    modalIframe.src = '';
+                }
+                if (!imageModalOverlay.classList.contains('hidden')) {
+                    imageModalOverlay.classList.add('hidden');
+                    modalImage.src = '';
+                }
+            }
+        });
+
+        // Funzione per estrarre l'ID di un video di YouTube
+        function getYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Funzione per aggiornare dinamicamente l'URL dei video se necessario (opzionale)
+        function updateProjectVideoUrls() {
+            projects.forEach(project => {
+                const videoId = getYouTubeId(project.videoUrl);
+                if (videoId) {
+                    project.videoUrl = `https://www.youtube.com/embed/${videoId}`;
+                }
+            });
+        }
+
+        window.onload = () => {
+            updateProjectVideoUrls();
+            createProjectCards();
+        };
+    </script>
+
+</body>
+</html>
